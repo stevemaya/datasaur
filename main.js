@@ -10,16 +10,8 @@ const makeDino = function(newSpecies, newPeriod, isACarnivore, newExtinct) {
   }
 }
 
-const makeSingular = function(dino) {
-  let newDino = makeDino(dino.species, dino.period, dino.carnivore, dino.extinct);
-  let newName = newDino.species;
-
-  if(newName.slice(-2) === "us") {1
-    const singularSpecies = newName.slice(0, -2);
-    newDino.species = singularSpecies;
-  }
-
-  return newDino;
+const makeExtinct = function(dino) {
+  return makeDino(dino.species, dino.period, dino.carnivore, true);
 }
 
 const truncateSpecies = function(dino) {
@@ -31,8 +23,16 @@ const truncateSpecies = function(dino) {
   return makeDino(truncatedName, dino.period, dino.carnivore, dino.extinct);
 }
 
-const makeExtinct = function(dino) {
-  return makeDino(dino.species, dino.period, dino.carnivore, true);
+const makeSingular = function(dino) {
+  let newDino = makeDino(dino.species, dino.period, dino.carnivore, dino.extinct);
+  let newName = newDino.species;
+
+  if(newName.slice(-2) === "us") {1
+    const singularSpecies = newName.slice(0, -2);
+    newDino.species = singularSpecies;
+  }
+
+  return newDino;
 }
 
 const isCarnivore = function(dino) {
@@ -82,19 +82,19 @@ const isCretaceous = function(dino) {
  * ITERATION FUNCTIONS *
  **********************/
 
-const singularizeDinos = function(dinos) {
-  const newDinos = dinos.map(makeSingular)
-  return newDinos;
+const makeAllExtinct = function(dinos) {
+    const extinctDinos = dinos.map(makeExtinct);
+    return extinctDinos;
 }
 
 const truncateDinos = function(dinos) {
-  const truncatedDinos = dinos.map(truncateSpecies);
-  return truncatedDinos;
-}
+    const truncatedDinos = dinos.map(truncateSpecies);
+    return truncatedDinos;
+  }
 
-const makeAllExtinct = function(dinos) {
-  const extinctDinos = dinos.map(makeExtinct);
-  return extinctDinos;
+const singularizeDinos = function(dinos) {
+  const newDinos = dinos.map(makeSingular)
+  return newDinos;
 }
 
 const carnivoresOnly = function(dinos) {
