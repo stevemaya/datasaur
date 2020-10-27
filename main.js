@@ -1,6 +1,80 @@
 /********************
  * HELPER FUNCTIONS *
  ********************/
+const makeDino = function(newSpecies, newPeriod, isACarnivore, newExtinct) {
+  return {
+    species: newSpecies,
+    period: newPeriod,
+    carnivore: isACarnivore,
+    extinct: newExtinct || false
+  }
+}
+
+const makeSingular = function(dino) {
+  let newDino = makeDino(dino.species, dino.period, dino.carnivore, dino.extinct);
+  let newName = newDino.species;
+
+  if(newName.slice(-2) === "us") {1
+    const singularSpecies = newName.slice(0, -2);
+    newDino.species = singularSpecies;
+  }
+
+  return newDino;
+}
+
+const truncateSpecies = function(dino) {
+  let truncatedName = dino.species;
+  if(truncatedName.length >= 10) {
+    truncatedName = truncatedName.slice(0, 7) + "...";
+  }
+
+  return makeDino(truncatedName, dino.period, dino.carnivore, dino.extinct);
+}
+
+const makeExtinct = function(dino) {
+  return makeDino(dino.species, dino.period, dino.carnivore, true);
+}
+
+const isCarnivore = function(dino) {
+  return dino.carnivore;
+}
+
+const isHerbivore = function(dino) {
+  return !dino.carnivore;
+}
+
+const isExtinct = function(dino) {
+  return dino.extinct;
+}
+
+const isNotExtinct = function(dino) {
+  return !dino.extinct;
+}
+
+const isTriassic = function(dino) {
+  if(dino.period === "Triassic") {
+    return true;
+  }
+
+  return false;
+}
+
+const isJurassic = function(dino) {
+  if(dino.period === "Jurassic") {
+    return true;
+  }
+
+  return false;
+}
+
+const isCretaceous = function(dino) {
+  if(dino.period === "Cretaceous") {
+    return true;
+  }
+
+  return false;
+}
+
 
 
 
@@ -8,7 +82,53 @@
  * ITERATION FUNCTIONS *
  **********************/
 
+const singularizeDinos = function(dinos) {
+  const newDinos = dinos.map(makeSingular)
+  return newDinos;
+}
 
+const truncateDinos = function(dinos) {
+  const truncatedDinos = dinos.map(truncateSpecies);
+  return truncatedDinos;
+}
+
+const makeAllExtinct = function(dinos) {
+  const extinctDinos = dinos.map(makeExtinct);
+  return extinctDinos;
+}
+
+const carnivoresOnly = function(dinos) {
+  const carnivores = dinos.filter(isCarnivore);
+  return carnivores;
+}
+
+const herbivoresOnly = function(dinos) {
+  const herbivores = dinos.filter(isHerbivore);
+  return herbivores;
+}
+
+const extinctOnly = function(dinos) {
+  const extincts = dinos.filter(isExtinct);
+  return extincts;
+}
+
+const notExtinct = function(dinos) {
+  const exists = dinos.filter(isNotExtinct);
+  return exists;
+}
+
+const triassicOnly = function(dinos) {
+  const triassicDinos = dinos.filter(isTriassic);
+  return triassicDinos;
+}
+
+const notTriassic = function(dinos) {
+  const jurassicDinos = dinos.filter(isJurassic);
+  const cretaceousDinos = dinos.filter(isCretaceous)
+  const nonTriassicDinos = jurassicDinos.concat(cretaceousDinos)
+  
+  return nonTriassicDinos;
+}
 
 /*********************************
  * TEST SETUP CODE - DON'T TOUCH!*
